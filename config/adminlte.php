@@ -16,7 +16,7 @@ return [
 
     'title' => 'PARTIDO',
     'title_prefix' => '',
-    'title_postfix' => ' - Redes de Sectores y Organizaciones',
+    'title_postfix' => ' - .',
 
     /*
     |--------------------------------------------------------------------------

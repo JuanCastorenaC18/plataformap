@@ -28,7 +28,7 @@
               <a href="/">
                 <x-application-logo class="w-10 h-10 fill-current text-gray-500" />
               </a>
-              <p>"TODOS UNIDOS POR UN MISMO PROYECTO"</p>
+              <p><strong> "Lo nuevo llego a Parras"</strong></p>
               <x-application-logo2 class="w-5 h-5 fill-current text-gray-300" />
             </div>
           </div>
@@ -37,7 +37,7 @@
             <div class="input-box">
               <header style="color: gray;">
                 <img src="img/logo2.png" alt="">
-                <h3 style="color: gray;">Redes de <strong>Sectores y Organizaciones</strong></h3>
+                <h3 style="color: gray;">  <strong> </strong></h3>
                 <p style="color: gray;">Movimiento Ciudadano <strong style="color: red;">COAHUILA</strong></p>
               </header>
               <form method="POST" id="login-form" action="{{ route('login') }}" novalidate>
