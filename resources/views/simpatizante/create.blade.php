@@ -15,7 +15,7 @@
         <div class="container-fluid">
             
             @include('components.boxmini')
-            @include('components.boxminiALTA')
+            @include('components.boxminiReg')
             
             <div class="row">
                 <div class="col">
