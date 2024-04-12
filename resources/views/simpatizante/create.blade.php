@@ -23,7 +23,7 @@
                     <div class="card card-info">
                     <div class="card-header" style="background-color: #603;">
                         <div class="d-flex align-items-center ">
-                            <img src="img/gitpri1.gif" alt="User Image" class="img-fluid" style="max-width: 300px; max-height: 70px; ">
+                            <img src="{{ asset('img/gitpri1.gif')}}" alt="User Image" class="img-fluid" style="max-width: 300px; max-height: 70px; ">
                             <p>ALTA DE SIMPATIZANTE</p>
                         </div>
                     </div>

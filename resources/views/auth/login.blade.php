@@ -38,7 +38,7 @@
               <header style="color: gray;">
                 <img src="img/logo2.png" alt="">
                 <h3 style="color: gray;">Redes de <strong>Sectores y Organizaciones</strong></h3>
-                <p style="color: gray;">Partido Revolucionario Institucional <strong style="color: red;">COAHUILA</strong></p>
+                <p style="color: gray;">Movimiento Ciudadano <strong style="color: red;">COAHUILA</strong></p>
               </header>
               <form method="POST" id="login-form" action="{{ route('login') }}" novalidate>
                 @csrf

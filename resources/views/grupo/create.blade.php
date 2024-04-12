@@ -23,7 +23,7 @@
                     <div class="card card-danger">
                     <div class="card-header" style="background-color: #f00;">
                         <div class="d-flex align-items-center ">
-                            <img src="img/gitpri1.gif" alt="User Image" class="img-fluid" style="max-width: 300px; max-height: 70px; ">
+                            <img src="{{ asset('img/gitpri1.gif')}}" alt="User Image" class="img-fluid" style="max-width: 300px; max-height: 70px; ">
                             <p>ALTA DE COORDINADOR DE GRUPO</p>
                         </div>
                     </div>
