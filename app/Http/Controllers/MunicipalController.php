@@ -7,6 +7,14 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\View;
 
+use App\Models\Simpatizante;
+use App\Models\UserDetail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+
+
 class MunicipalController extends Controller
 {
     /**
@@ -17,6 +25,16 @@ class MunicipalController extends Controller
          // Obtén el objeto del rol 'cooestatal'
          $cooestatalRole = Role::where('name', 'coomunicipal')->first();
          $users = $cooestatalRole->users;
+
+         // Obtén los detalles de cada usuario
+        $usersWithDetails = [];
+        foreach ($users as $user) {
+            $details = UserDetail::where('user_id', $user->id)->first();
+            $usersWithDetails[] = [
+                'user' => $user,
+                'details' => $details
+            ];
+        }
  
         
          // Definir los nombres de los roles que deseas contar
@@ -75,6 +93,7 @@ class MunicipalController extends Controller
              'coogrupoCount' => $coogrupoCount,
              'responsableredCount' => $responsableredCount,
              'simpatizantesCount' => $simpatizantesCount,
+             'usersWithDetails' => $usersWithDetails,
          ], compact('users'));
     }
 
