@@ -66,7 +66,7 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
-                    <th style="width: 40%">Acciones</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -100,15 +100,7 @@
                           <i class="fas fa-pencil-alt">
                           </i>
                           Editar
-                        </a>
-                        
-                        
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
-                          </i>
-                          Eliminar</button>
-                        
+                        </a>                        
                       </form>
                     </td>
                   </tr>
@@ -124,7 +116,7 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
-                    <th style="width: 40%">Acciones</th>
+                    <th>Acciones</th>
                   </tr>
                 </tfoot>
               </table>

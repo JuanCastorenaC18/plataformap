@@ -39,10 +39,12 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($users as $user)
+                  @foreach ($usersWithDetails as $userData)
                   <tr>
                     <td style="text-align: center;">{{ $user->id }}</td>
                     <td style="text-align: center;">{{ $user->name }}</td>
@@ -57,7 +59,27 @@
                         <span class="badge badge-danger"><i class="fas fa-times"></i></span> <!-- Icono de tachita -->
                       @endif
                     </td>
+                    <td class="project-actions text-right">
+                      <form action="{{ route('grupo.destroy',$user->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modal-xl-{{ $user->id }}" title="Ver">
+                          <i class="fas fa-folder">
+                          </i>
+                          Ver
+                        </a>
+                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-up-{{ $user->id }}">
+                          <i class="fas fa-pencil-alt">
+                          </i>
+                          Editar
+                        </a>
+                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
+                          </i>
+                          Eliminar</button>
+                      </form>
+                    </td>
                   </tr>
+                  @endforeach
                   @endforeach
                 </tbody>
                 <tfoot>
@@ -69,6 +91,7 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
+                    <th>Acciones</th>
                   </tr>
                 </tfoot>
               </table>
@@ -83,6 +106,379 @@
     </div>
     <!-- /.container-fluid -->
   </section>
+
+   <!-- VER -->
+@foreach ($users as $user)
+      <div class="modal fade" id="modal-xl-{{ $user->id }}">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <img src="img/logoiesizformal.png" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">
+              <h4 class="modal-title">Datos Del Usuario</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group text-dark">
+                        <strong class="text-dark">Nombre:</strong>
+                        <input type="text" class="form-control form-control-border" value="{{ $user->name }}" readonly>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group text-dark">
+                        <strong class="text-dark">Usuario:</strong>
+                        <input type="text" class="form-control form-control-border" value="{{ $user->usuario }}" readonly>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group text-dark">
+                        <strong class="text-dark">Correo:</strong>
+                        <input type="text" class="form-control form-control-border" value="{{ $user->email }}" readonly>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group text-dark">
+                        <strong class="text-dark">Contraseña:</strong>
+                        <input type="text" class="form-control form-control-border" value="{{ $user->helperpass }}" readonly>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  <div class="form-group text-dark">
+                    <div id="conteiner1">
+                      <table class="table table-striped table-bordered">
+                        <thead class="table-info">
+                          <tr>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Sexo</th>
+                            <th>Ocupacion</th>
+                            <th>Estado</th>
+                            <th>Tipo De Usuario</th>
+                            <th>Fecha de Alta</th>
+                            <th>Tel Celular</th>
+                            <th>Tel Particular</th>
+                            <th>Twitter</th>
+                            <th>Facebook</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                            {{ $userData['details']->fecha_nacimiento }}
+                            </td>
+                            <td>
+                            {{ $userData['details']->sexo }}
+                            </td>
+                            <td>
+                            {{ $userData['details']->ocupacion }}
+                            </td>
+                            <td>
+                              @if($user->status == 1)
+                                <span style="color: green;">Activo</span>
+                              @else
+                                <span style="color: red;">Inactivo</span>
+                              @endif
+                            </td>
+                            <td>
+                              @foreach ($user->roles as $role)
+                                @if ($role->name === 'COOESTATAL')
+                                  COORDINADOR ESTATAL
+                                @elseif ($role->name === 'COOMUNICIPAL')
+                                  COORDINADOR MUNICIPAL
+                                @elseif ($role->name === 'COOGRUPO')
+                                  COORDINADOR DE GRUPO
+                                @elseif ($role->name === 'RESPONSABLERED')
+                                  RESPONSABLE DE RED
+                                @elseif ($role->name === 'SIMPATIZANTES')
+                                  SIMPATIZANTE
+                                @endif
+                                
+                              @endforeach
+                            </td>
+                            <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                            <td>
+                            {{ $userData['details']->tel_celular }}
+                            </td>
+                            <td>
+                            {{ $userData['details']->tel_particular }}
+                            </td>
+                            <td>
+                            {{ $userData['details']->twitter }}
+                            </td>
+                            <td>
+                            {{ $userData['details']->facebook }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                  <div class="form-group text-dark">
+                    <div id="conteiner1">
+                      <table class="table table-striped table-bordered">
+                        <thead class="table-info">
+                          <tr>
+                            <th>Informacion</th>
+                            <th>Clave Electorial</th>
+                            <th>Calle</th>
+                            <th>Municipio</th>
+                            <th>Seccion</th>
+                            <th>Numero De Casa</th>
+                            <th>Num. Interno</th>
+                            <th>Codigo Postal</th>
+                            <th>Colonia</th>
+                            <th>Fecha y Hora De Alta</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                            {{ $userData['details']->informacion }}
+                            </td>
+                            <td>{{ $userData['details']->clave }}</td>
+                            <td>{{ $userData['details']->calle }}</td>
+                            <td>{{ $userData['details']->municipio }}</td>
+                            <td>{{ $userData['details']->seccion }}</td>
+                            <td>{{ $userData['details']->num }}</td>
+                            <td>{{ $userData['details']->int }}</td>
+                            <td>{{ $userData['details']->codigo_postal }}</td>
+                            <td>{{ $userData['details']->colonia }}</td>
+                            <td>{{ $userData['details']->created_at }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Atras</button>
+              
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+  @endforeach
+  <!--EDITAR-->
+  @foreach ($users as $user)
+    <div class="modal fade" id="modal-up-{{ $user->id }}">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <img src="img/logoiesizformal.png" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">
+            <h4 class="modal-title">Editar Datos Del Usuario</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('simpatizante.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @method('PATCH') 
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 callout callout-warning">
+                        <h5>Datos Personales</h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="apellido_paterno" class="form-control form-control-border" value="{{ $user->apellido_paterno }}" placeholder="Ap. Paterno" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="apellido_materno" class="form-control form-control-border" value="{{ $user->apellido_materno }}" placeholder="Ap. Materno" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="nombre" class="form-control form-control-border" value="{{ $user->nombre }}" placeholder="Nombre(s)" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                      <p>Fecha Nacimiento:</p>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-2 col-xl-2">
+                      <input type="date" name="fecha_nacimiento" value="{{ $userData['details']->fecha_nacimiento }}" class="form-control form-control-border" placeholder="Fecha Nacimiento" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <select name="sexo" value="{{ $userData['details']->sexo }}" id="Sexo" class="custom-select form-control-border" id="exampleSelectBorder">
+                        <option value="">Indique El Sexo</option>
+                        <option value="Hombre" @if($userData['details']->sexo == 'Hombre') selected @endif>Hombre</option>
+                        <option value="Mujer" @if($userData['details']->sexo == 'Mujer') selected @endif>Mujer</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="fecha_alta" class="form-control form-control-border" value="{{ $userData['details']->fecha_alta }}"  placeholder="Fecha Actual" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 callout callout-warning">
+                      <h5>Datos Adicionales</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="ocupacion" class="form-control form-control-border" value="{{ $userData['details']->ocupacion }}"  placeholder="Ocupacion" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="tel" name="tel_celular" class="form-control form-control-border" value="{{ $userData['details']->tel_celular }}" placeholder="Tel. Celular" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="tel" name="tel_particular" class="form-control form-control-border" value="{{ $userData['details']->tel_particular }}" placeholder="Tel. Particular" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="email" name="email" value="{{ $userData['details']->email }}" class="form-control form-control-border" placeholder="Correo" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="facebook" value="{{ $userData['details']->facebook }}" class="form-control form-control-border" placeholder="Facebook" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="twitter" value="{{ $userData['details']->twitter }}" class="form-control form-control-border" placeholder="Twitter" required>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <input type="text" name="informacion" value="{{ $userData['details']->informacion }}" class="form-control form-control-border" placeholder="Informacion Extra">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 callout callout-warning">
+                      <h5>Datos Domicilio</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="calle" value="{{ $userData['details']->calle }}" class="form-control form-control-border" placeholder="Calle" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <select name="municipio" id="Municipio" value="{{ $userData['details']->municipio }}" class="custom-select form-control-border" id="exampleSelectBorder">
+                        <!-- Opciones para municipios de Coahuila -->
+                        <option value="Abasolo" @if($userData['details']->municipio == 'Abasolo') selected @endif>Abasolo</option>
+                        <option value="Acuña" @if($userData['details']->municipio == 'Acuña') selected @endif>Acuña</option>
+                        <option value="Allende" @if($userData['details']->municipio == 'Allende') selected @endif>Allende</option>
+                        <option value="Arteaga" @if($userData['details']->municipio == 'Arteaga') selected @endif>Arteaga</option>
+                        <option value="Candela" @if($userData['details']->municipio == 'Candela') selected @endif>Candela</option>
+                        <option value="Castaños" @if($userData['details']->municipio == 'Castaños') selected @endif>Castaños</option>
+                        <option value="Cuatro Ciénegas" @if($userData['details']->municipio == 'Cuatro Ciénegas') selected @endif>Cuatro Ciénegas</option>
+                        <option value="Escobedo" @if($userData['details']->municipio == 'Escobedo') selected @endif>Escobedo</option>
+                        <option value="Francisco I. Madero" @if($userData['details']->municipio == 'Francisco I. Madero') selected @endif>Francisco I. Madero</option>
+                        <option value="Frontera" @if($userData['details']->municipio == 'Frontera') selected @endif>Frontera</option>
+                        <option value="General Cepeda" @if($userData['details']->municipio == 'General Cepeda') selected @endif>General Cepeda</option>
+                        <option value="Guerrero" @if($userData['details']->municipio == 'Guerrero') selected @endif>Guerrero</option>
+                        <option value="Hidalgo" @if($userData['details']->municipio == 'Hidalgo') selected @endif>Hidalgo</option>
+                        <option value="Jiménez" @if($userData['details']->municipio == 'Jiménez') selected @endif>Jiménez</option>
+                        <option value="Juárez" @if($userData['details']->municipio == 'Juárez') selected @endif>Juárez</option>
+                        <option value="Lamadrid" @if($userData['details']->municipio == 'Lamadrid') selected @endif>Lamadrid</option>
+                        <option value="Matamoros" @if($userData['details']->municipio == 'Matamoros') selected @endif>Matamoros</option>
+                        <option value="Monclova" @if($userData['details']->municipio == 'Monclova') selected @endif>Monclova</option>
+                        <option value="Morelos" @if($userData['details']->municipio == 'Morelos') selected @endif>Morelos</option>
+                        <option value="Múzquiz" @if($userData['details']->municipio == 'Múzquiz') selected @endif>Múzquiz</option>
+                        <option value="Nadadores" @if($userData['details']->municipio == 'Nadadores') selected @endif>Nadadores</option>
+                        <option value="Nava" @if($userData['details']->municipio == 'Nava') selected @endif>Nava</option>
+                        <option value="Ocampo" @if($userData['details']->municipio == 'Ocampo') selected @endif>Ocampo</option>
+                        <option value="Parras" @if($userData['details']->municipio == 'Parras') selected @endif>Parras</option>
+                        <option value="Piedras Negras" @if($userData['details']->municipio == 'Piedras Negras') selected @endif>Piedras Negras</option>
+                        <option value="Progreso" @if($userData['details']->municipio == 'Progreso') selected @endif>Progreso</option>
+                        <option value="Ramos Arizpe" @if($userData['details']->municipio == 'Ramos Arizpe') selected @endif>Ramos Arizpe</option>
+                        <option value="Sabinas" @if($userData['details']->municipio == 'Sabinas') selected @endif>Sabinas</option>
+                        <option value="Sacramento" @if($userData['details']->municipio == 'Sacramento') selected @endif>Sacramento</option>
+                        <option value="Saltillo" @if($userData['details']->municipio == 'Saltillo') selected @endif>Saltillo</option>
+                        <option value="San Buenaventura" @if($userData['details']->municipio == 'San Buenaventura') selected @endif>San Buenaventura</option>
+                        <option value="San Juan de Sabinas" @if($userData['details']->municipio == 'San Juan de Sabinas') selected @endif>San Juan de Sabinas</option>
+                        <option value="San Pedro" @if($userData['details']->municipio == 'San Pedro') selected @endif>San Pedro</option>
+                        <option value="Sierra Mojada" @if($userData['details']->municipio == 'Sierra Mojada') selected @endif>Sierra Mojada</option>
+                        <option value="Torreón" @if($userData['details']->municipio == 'Torreón') selected @endif>Torreón</option>
+                        <option value="Viesca" @if($userData['details']->municipio == 'Viesca') selected @endif>Viesca</option>
+                        <option value="Villa Unión" @if($userData['details']->municipio == 'Villa Unión') selected @endif>Villa Unión</option>
+                        <option value="Zaragoza" @if($userData['details']->municipio == 'Zaragoza') selected @endif>Zaragoza</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="seccion" value="{{ $userData['details']->seccion }}" class="form-control form-control-border" placeholder="Seccion" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="num" value="{{ $userData['details']->num }}" class="form-control form-control-border" placeholder="Num" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name=" int" value="{{ $userData['details']->int }}" class="form-control form-control-border" placeholder="int.">
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
+                      <input type="text" name="codigo_postal" value="{{ $userData['details']->codigo_postal }}" class="form-control form-control-border" placeholder="Codigo Postal" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
+                      <input type="text" name="colonia" value="{{ $userData['details']->colonia }}" class="form-control form-control-border" placeholder="Colonia" required>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
+                      <input type="text" name="clave" value="{{ $userData['details']->clave }}" class="form-control form-control-border" placeholder="Clav E" required>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 callout callout-warning">
+                      <h5>Datos de Control</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
+                    <input type="text" name="usuario"  value="{{ $user->usuario }}" class="form-control form-control-border" placeholder="Usuario" required>
+                  </div>
+                  <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <input type="password" name="password" id="password" value="{{ $user->helperpass }}" class="form-control form-control-border" placeholder="Contraseña" required>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                          <span class="fas fa-eye" id="eyeIcon"></span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Atras</button>
+                  <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                </div>
+            </form>           
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+  @endforeach
+
 @stop
 
 @section('css')

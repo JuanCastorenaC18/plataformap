@@ -40,7 +40,7 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
-                    <th style="width: 40%">Acciones</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,7 +92,7 @@
                     <th>Simpatizantes</th>
                     <th>Correo</th>
                     <th>Estatus</th>
-                    <th style="width: 40%">Acciones</th>
+                    <th>Acciones</th>
                   </tr>
                 </tfoot>
               </table>
@@ -280,7 +280,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form action="{{ route('estatal.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('municipal.update', $user->id) }}" method="POST" enctype="multipart/form-data">
               @csrf
               @method('PATCH') 
 

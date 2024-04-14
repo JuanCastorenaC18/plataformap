@@ -241,9 +241,56 @@ class MunicipalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user): RedirectResponse
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            // Actualizar los datos del usuario
+            $user->update([
+                'nombre' => $request->input('nombre'),
+                'apellido_paterno' => $request->input('apellido_paterno'),
+                'apellido_materno' => $request->input('apellido_materno'),
+                'name' => $request->input('apellido_paterno') . ' ' . $request->input('apellido_materno') . ' ' . $request->input('nombre'),
+                'usuario' => $request->input('usuario'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')), // Opcional: solo si se actualiza la contraseña
+                'helperpass' => $request->input('password') // Opcional: solo si se actualiza la contraseña
+            ]);
+
+            // Actualizar los detalles del usuario
+            $userDetail = UserDetail::where('user_id', $user->id)->first();
+            if ($userDetail) {
+                $userDetail->update([
+                    'fecha_nacimiento' => $request->input('fecha_nacimiento'),
+                    'sexo' => $request->input('sexo'),
+                    'fecha_alta' => $request->input('fecha_alta'),
+                    'ocupacion' => $request->input('ocupacion'),
+                    'tel_celular' => $request->input('tel_celular'),
+                    'tel_particular' => $request->input('tel_particular'),
+                    'email' => $request->input('email'),
+                    'facebook' => $request->input('facebook'),
+                    'twitter' => $request->input('twitter'),
+                    'informacion' => $request->input('informacion'),
+                    'calle' => $request->input('calle'),
+                    'municipio' => $request->input('municipio'),
+                    'seccion' => $request->input('seccion'),
+                    'num' => $request->input('num'),
+                    'int' => $request->input('int'),
+                    'codigo_postal' => $request->input('codigo_postal'),
+                    'colonia' => $request->input('colonia'),
+                    'clave' => $request->input('clave')
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('estatal.index')->with('Exito', 'Usuario actualizado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return back()->withInput()->withErrors(['error' => 'Hubo un error al actualizar el usuario. Por favor, intenta de nuevo.']);
+        }
     }
 
     
