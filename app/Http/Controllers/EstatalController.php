@@ -237,8 +237,27 @@ class EstatalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            // Eliminar los detalles del usuario
+            $userDetail = UserDetail::where('user_id', $user->id)->first();
+            if ($userDetail) {
+                $userDetail->delete();
+            }
+
+            // Eliminar el usuario
+            $user->delete();
+
+            DB::commit();
+
+            return redirect()->route('estatal.index')->with('Exito', 'Usuario eliminado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return back()->withErrors(['error' => 'Hubo un error al eliminar el usuario. Por favor, intenta de nuevo.']);
+        }
     }
 }

@@ -246,11 +246,29 @@ class MunicipalController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    
+    public function destroy($id): RedirectResponse
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            // Buscar y eliminar los detalles del usuario
+            $userDetail = UserDetail::where('user_id', $id)->first();
+            if ($userDetail) {
+                $userDetail->delete();
+            }
+
+            // Buscar y eliminar el usuario
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            DB::commit();
+
+            return redirect()->route('municipal.index')->with('Exito', 'Usuario eliminado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return back()->withErrors(['error' => 'Hubo un error al eliminar el usuario. Por favor, intenta de nuevo.']);
+        }
     }
 }

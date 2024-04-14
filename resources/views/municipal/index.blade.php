@@ -61,7 +61,7 @@
                       @endif
                     </td>
                     <td class="project-actions text-right">
-                      <form action="{{ route('estatal.destroy',$user->id) }}" method="POST">
+                      <form action="{{ route('municipal.destroy',$user->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modal-xl-{{ $user->id }}" title="Ver">
@@ -74,9 +74,7 @@
                           </i>
                           Editar
                         </a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
+                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
                           </i>
                           Eliminar</button>
                       </form>
