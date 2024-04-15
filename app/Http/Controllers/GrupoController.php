@@ -34,6 +34,12 @@ class GrupoController extends Controller
             ];
         }
        
+        $coordinadores = [];
+        foreach ($usersWithDetails as $userData) {
+            $coordinadorId = $userData['details']->coordinador_id;
+            $coordinador = User::find($coordinadorId); // Suponiendo que 'User' es el modelo de tu tabla de usuarios
+            $coordinadores[$coordinadorId] = $coordinador->name;
+        }
         // Definir los nombres de los roles que deseas contar
         $rolesToCount = [
             'admin',
@@ -91,6 +97,7 @@ class GrupoController extends Controller
             'responsableredCount' => $responsableredCount,
             'simpatizantesCount' => $simpatizantesCount,
             'usersWithDetails' => $usersWithDetails,
+            'coordinadores' => $coordinadores,
         ], compact('users'));
     }
 

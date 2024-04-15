@@ -35,6 +35,12 @@ class MunicipalController extends Controller
                 'details' => $details
             ];
         }
+        $coordinadores = [];
+        foreach ($usersWithDetails as $userData) {
+            $coordinadorId = $userData['details']->coordinador_id;
+            $coordinador = User::find($coordinadorId); // Suponiendo que 'User' es el modelo de tu tabla de usuarios
+            $coordinadores[$coordinadorId] = $coordinador->name;
+        }
  
         
          // Definir los nombres de los roles que deseas contar
@@ -94,6 +100,7 @@ class MunicipalController extends Controller
              'responsableredCount' => $responsableredCount,
              'simpatizantesCount' => $simpatizantesCount,
              'usersWithDetails' => $usersWithDetails,
+             'coordinadores' => $coordinadores,
          ], compact('users'));
     }
 
@@ -124,6 +131,7 @@ class MunicipalController extends Controller
         $coogrupoCount = 0;
         $responsableredCount = 0;
         $simpatizantesCount = 0;
+        
 
         // Iterar sobre cada nombre de rol y contar los usuarios correspondientes
         foreach ($rolesToCount as $roleName) {

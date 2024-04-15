@@ -38,7 +38,7 @@
                     <th>Municipio</th>
                     <th>Tel. Celular</th>
                     <th>Simpatizantes</th>
-                    <th>Correo</th>
+                    <th>Alt. Usuario</th>
                     <th>Estatus</th>
                     <th>Acciones</th>
                   </tr>
@@ -52,7 +52,9 @@
                     <td style="text-align: center;">{{ $userData['details']->municipio }}</td>
                     <td style="text-align: center;">{{ $userData['details']->tel_celular }}</td>
                     <td style="text-align: center;">(1)</td>
-                    <td style="text-align: center;">{{ $user->email }}</td>
+                    <td style="text-align: center;">
+                      {{ isset($coordinadores[$userData['details']->coordinador_id]) ? $coordinadores[$userData['details']->coordinador_id] : '-' }}
+                    </td>
                     <td class="project-state" style="text-align: center;">
                       @if($user->status == 1)
                         <span class="badge badge-success"><i class="fas fa-check"></i></span> <!-- Icono de palomita -->
@@ -90,7 +92,7 @@
                     <th>Municipio</th>
                     <th>Tel. Celular</th>
                     <th>Simpatizantes</th>
-                    <th>Correo</th>
+                    <th>Alt. Usuario</th>
                     <th>Estatus</th>
                     <th>Acciones</th>
                   </tr>
