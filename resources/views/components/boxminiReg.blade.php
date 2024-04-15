@@ -9,9 +9,11 @@
             <div class="icon">
                 <i class="fas fa-user-tie"></i>
             </div>
-            <a href="#" class="small-box-footer">
-                 <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('estatal.create')
+                <a href="#" class="small-box-footer">
+                    <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -25,9 +27,11 @@
             <div class="icon">
                 <i class="fas fa-id-card-alt"></i>
             </div>
-            <a href="{{ route('municipal.create') }}" class="small-box-footer">
-                DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('municipal.create')
+                <a href="{{ route('municipal.create') }}" class="small-box-footer">
+                    DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -41,9 +45,11 @@
             <div class="icon">
                 <i class="fas fa-id-card-alt"></i>
             </div>
-            <a href="{{ route('grupo.create') }}" class="small-box-footer">
-                DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('grupo.create')
+                <a href="{{ route('grupo.create') }}" class="small-box-footer">
+                    DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -73,9 +79,11 @@
             <div class="icon">
                 <i class="fas fa-users"></i>
             </div>
-            <a href="{{ route('simpatizante.create') }}" class="small-box-footer">
-                DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('simpatizante.create')
+                <a href="{{ route('simpatizante.create') }}" class="small-box-footer">
+                    DAR DE ALTA <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->  

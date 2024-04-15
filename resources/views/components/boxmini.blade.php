@@ -9,9 +9,11 @@
             <div class="icon">
                 <i class="fas fa-user-tie"></i>
             </div>
-            <a href="{{ route('estatal.index') }}" class="small-box-footer">
-                Ver Detalle <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('estatal.index')
+                <a href="{{ route('estatal.index') }}" class="small-box-footer">
+                    Ver Detalle <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -25,9 +27,11 @@
             <div class="icon">
                 <i class="fas fa-id-card-alt"></i>
             </div>
-            <a href="{{ route('municipal.index') }}" class="small-box-footer">
-                Ver Detalle <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('municipal.index')
+                <a href="{{ route('municipal.index') }}" class="small-box-footer">
+                    Ver Detalle <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -41,9 +45,11 @@
             <div class="icon">
                 <i class="fas fa-id-card-alt"></i>
             </div>
-            <a href="{{ route('grupo.index') }}" class="small-box-footer">
-                Ver Detalle <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('grupo.index')
+                <a href="{{ route('grupo.index') }}" class="small-box-footer">
+                    Ver Detalle <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->
@@ -73,9 +79,11 @@
             <div class="icon">
                 <i class="fas fa-users"></i>
             </div>
-            <a href="{{ route('simpatizante.index') }}" class="small-box-footer">
-                Ver Detalle <i class="fas fa-arrow-circle-right"></i>
-            </a>
+            @can('simpatizante.index')
+                <a href="{{ route('simpatizante.index') }}" class="small-box-footer">
+                    Ver Detalle <i class="fas fa-arrow-circle-right"></i>
+                </a>
+            @endcan
         </div>
     </div>
     <!-- ./col -->  
