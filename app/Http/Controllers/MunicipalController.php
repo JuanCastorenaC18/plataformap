@@ -17,6 +17,17 @@ use Illuminate\Http\RedirectResponse;
 
 class MunicipalController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:municipal.index')->only('index');
+        $this->middleware('can:municipal.create')->only('create');
+        $this->middleware('can:municipal.store')->only('store');
+        $this->middleware('can:municipal.show')->only('show');
+        $this->middleware('can:municipal.edit')->only('edit');
+        $this->middleware('can:municipal.update')->only('update');
+        $this->middleware('can:municipal.destroy')->only('destroy');
+        $this->middleware('can:municipal.deactivate')->only('deactivate');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -293,7 +304,7 @@ class MunicipalController extends Controller
 
             DB::commit();
 
-            return redirect()->route('estatal.index')->with('Exito', 'Usuario actualizado correctamente.');
+            return redirect()->route('municipal.index')->with('Exito', 'Usuario actualizado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

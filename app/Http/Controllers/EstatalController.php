@@ -16,6 +16,18 @@ use Illuminate\Http\RedirectResponse;
 
 class EstatalController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:estatal.index')->only('index');
+        $this->middleware('can:estatal.create')->only('create');
+        $this->middleware('can:estatal.store')->only('store');
+        $this->middleware('can:estatal.show')->only('show');
+        $this->middleware('can:estatal.edit')->only('edit');
+        $this->middleware('can:estatal.update')->only('update');
+        $this->middleware('can:estatal.destroy')->only('destroy');
+        $this->middleware('can:estatal.deactivate')->only('deactivate');
+    }
     /**
      * Display a listing of the resource.
      */

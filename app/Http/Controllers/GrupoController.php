@@ -16,6 +16,17 @@ use Illuminate\Http\RedirectResponse;
 
 class GrupoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:grupo.index')->only('index');
+        $this->middleware('can:grupo.create')->only('create');
+        $this->middleware('can:grupo.store')->only('store');
+        $this->middleware('can:grupo.show')->only('show');
+        $this->middleware('can:grupo.edit')->only('edit');
+        $this->middleware('can:grupo.update')->only('update');
+        $this->middleware('can:grupo.destroy')->only('destroy');
+        $this->middleware('can:grupo.deactivate')->only('deactivate');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -299,7 +310,7 @@ class GrupoController extends Controller
 
             DB::commit();
 
-            return redirect()->route('estatal.index')->with('Exito', 'Usuario actualizado correctamente.');
+            return redirect()->route('grupo.index')->with('Exito', 'Usuario actualizado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -327,7 +338,7 @@ class GrupoController extends Controller
 
             DB::commit();
 
-            return redirect()->route('Grupo.index')->with('Exito', 'Usuario eliminado correctamente.');
+            return redirect()->route('grupo.index')->with('Exito', 'Usuario eliminado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

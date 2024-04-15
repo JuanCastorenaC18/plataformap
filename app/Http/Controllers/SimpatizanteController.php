@@ -17,6 +17,17 @@ use Illuminate\Http\RedirectResponse;
 
 class SimpatizanteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:simpatizante.index')->only('index');
+        $this->middleware('can:simpatizante.create')->only('create');
+        $this->middleware('can:simpatizante.store')->only('store');
+        $this->middleware('can:simpatizante.show')->only('show');
+        $this->middleware('can:simpatizante.edit')->only('edit');
+        $this->middleware('can:simpatizante.update')->only('update');
+        $this->middleware('can:simpatizante.destroy')->only('destroy');
+        $this->middleware('can:simpatizante.deactivate')->only('deactivate');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -305,7 +316,7 @@ class SimpatizanteController extends Controller
 
             DB::commit();
 
-            return redirect()->route('estatal.index')->with('Exito', 'Usuario actualizado correctamente.');
+            return redirect()->route('simpatizante.index')->with('Exito', 'Usuario actualizado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
@@ -332,7 +343,7 @@ class SimpatizanteController extends Controller
 
             DB::commit();
 
-            return redirect()->route('Grupo.index')->with('Exito', 'Usuario eliminado correctamente.');
+            return redirect()->route('simpatizante.index')->with('Exito', 'Usuario eliminado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

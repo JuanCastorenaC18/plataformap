@@ -7,20 +7,26 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class RoleSeeder extends Seeder
+class PermisoSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //$role1 = Role::create(['name' => 'ADMIN']);
-        $role1 = Role::create(['name' => 'COOESTATAL']);
+        /*$role1 = Role::create(['name' => 'ADMIN']);
+        $role2 = Role::create(['name' => 'COOESTATAL']);
         $role2 = Role::create(['name' => 'COOMUNICIPAL']);
         $role3 = Role::create(['name' => 'COOGRUPO']);
         $role4 = Role::create(['name' => 'RESPONSABLERED']);
-        $role5 = Role::create(['name' => 'SIMPATIZANTES']);
+        $role5 = Role::create(['name' => 'SIMPATIZANTES']);*/
         // Obtener los roles existentes por nombre
+        $role1 = Role::where('name', 'ADMIN')->first();
+        $role2 = Role::where('name', 'COOESTATAL')->first();
+        $role3 = Role::where('name', 'COOMUNICIPAL')->first();
+        $role4 = Role::where('name', 'COOGRUPO')->first();
+        $role5 = Role::where('name', 'RESPONSABLERED')->first();
+        $role6 = Role::where('name', 'SIMPATIZANTES')->first();
 
         /*--------------------------------------------------------------------------------------------------------------------*/
         //$permission = Permission::create(['name' => 'prueba', 'description' => 'Ver pantalla de prueba'])->syncRoles([$role1, $role2]);
