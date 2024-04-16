@@ -86,10 +86,10 @@
                                         <input type="text" name="ocupacion" class="form-control form-control-border" placeholder="Ocupacion" required>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="tel" name="tel_celular" class="form-control form-control-border" placeholder="Tel. Celular" required>
+                                        <input type="tel" name="tel_celular" class="form-control form-control-border" maxlength="10" minlength="10" placeholder="Tel. Celular" required>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="tel" name="tel_particular" class="form-control form-control-border" placeholder="Tel. Particular" required>
+                                        <input type="tel" name="tel_particular" class="form-control form-control-border" maxlength="10" minlength="10" placeholder="Tel. Particular" required>
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +189,7 @@
                                         <input type="text" name="colonia" class="form-control form-control-border" placeholder="Colonia" required>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
-                                        <input type="text" name="clave" class="form-control form-control-border" placeholder="Clav E" required>
+                                        <input type="text" name="clave" class="form-control form-control-border" maxlength="18" minlength="18" placeholder="Clav E" required>
                                     </div>
                                 </div>
                             </div>
