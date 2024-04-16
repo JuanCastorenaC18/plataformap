@@ -164,3 +164,5 @@ Route::resource('estatal', EstatalController::class)->names(['estatal']);
 Route::resource('municipal', MunicipalController::class)->names(['municipal']);
 Route::resource('responsable-red', RedController::class)->names(['responsable-red']);
 Route::resource('grupo', GrupoController::class)->names(['grupo']);
+
+
