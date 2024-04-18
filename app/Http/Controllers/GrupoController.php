@@ -32,9 +32,9 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        // Obtén el objeto del rol 'cooestatal'
-        $cooestatalRole = Role::where('name', 'coogrupo')->first();
-        $users = $cooestatalRole->users;
+        // Obtener el objeto del rol 'coogrupo'
+        $coogrupoRole = Role::where('name', 'coogrupo')->first();
+        $users = $coogrupoRole->users;
 
         $usersWithDetails = [];
         foreach ($users as $user) {
@@ -44,14 +44,17 @@ class GrupoController extends Controller
                 'details' => $details
             ];
         }
-       
+
+        // Obtener nombres de coordinadores asociados
         $coordinadores = [];
         foreach ($usersWithDetails as $userData) {
             $coordinadorId = $userData['details']->coordinador_id;
-            $coordinador = User::find($coordinadorId); // Suponiendo que 'User' es el modelo de tu tabla de usuarios
-            $coordinadores[$coordinadorId] = $coordinador->name;
+            $coordinador = User::find($coordinadorId);
+            if ($coordinador) {
+                $coordinadores[$coordinadorId] = $coordinador->name;
+            }
         }
-        // Definir los nombres de los roles que deseas contar
+
         $rolesToCount = [
             'admin',
             'cooestatal',
@@ -100,6 +103,8 @@ class GrupoController extends Controller
                 }
             }
         }
+
+        // Pasar datos a la vista
         return view('grupo.index', [
             'adminCount' => $adminCount,
             'cooestatalCount' => $cooestatalCount,
@@ -111,6 +116,7 @@ class GrupoController extends Controller
             'coordinadores' => $coordinadores,
         ], compact('users'));
     }
+
 
     /**
      * Show the form for creating a new resource.

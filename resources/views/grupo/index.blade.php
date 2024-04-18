@@ -29,74 +29,71 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="usuarios" class="table table-bordered table-striped" data-toggle="table" data-target="#usuarios">
-                <thead>
+            <table id="usuarios" class="table table-bordered table-striped" data-toggle="table" data-target="#usuarios">
+              <thead>
                   <tr>
-                    <th>Clave</th>
-                    <th>Nombre</th>
-                    <th>Municipio</th>
-                    <th>Tel. Celular</th>
-                    <th>Simpatizantes</th>
-                    <th>Alt. Usuario</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
+                      <th>Clave</th>
+                      <th>Nombre</th>
+                      <th>Municipio</th>
+                      <th>Tel. Celular</th>
+                      <th>Simpatizantes</th>
+                      <th>Alt. Usuario</th>
+                      <th>Estatus</th>
+                      <th>Acciones</th>
                   </tr>
-                </thead>
-                <tbody>
-                  @foreach ($users as $user)
+              </thead>
+              <tbody>
                   @foreach ($usersWithDetails as $userData)
-                  <tr>
-                    <td style="text-align: center;">{{ $user->id }}</td>
-                    <td style="text-align: center;">{{ $user->name }}</td>
-                    <td style="text-align: center;">{{ $userData['details']->municipio }}</td>
-                    <td style="text-align: center;">{{ $userData['details']->tel_celular }}</td>
-                    <td style="text-align: center;">(1)</td>
-                    <td style="text-align: center;">
-                      {{ isset($coordinadores[$userData['details']->coordinador_id]) ? $coordinadores[$userData['details']->coordinador_id] : '-' }}
-                    </td>
-                    <td class="project-state" style="text-align: center;">
-                      @if($user->status == 1)
-                        <span class="badge badge-success"><i class="fas fa-check"></i></span> <!-- Icono de palomita -->
-                      @else
-                        <span class="badge badge-danger"><i class="fas fa-times"></i></span> <!-- Icono de tachita -->
-                      @endif
-                    </td>
-                    <td class="project-actions text-right">
-                      <form action="{{ route('grupo.destroy',$user->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modal-xl-{{ $user->id }}" title="Ver">
-                          <i class="fas fa-folder">
-                          </i>
-                          Ver
-                        </a>
-                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-up-{{ $user->id }}">
-                          <i class="fas fa-pencil-alt">
-                          </i>
-                          Editar
-                        </a>
-                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
-                          </i>
-                          Eliminar</button>
-                      </form>
-                    </td>
-                  </tr>
+                      <tr>
+                          <td style="text-align: center;">{{ $userData['user']->id }}</td>
+                          <td style="text-align: center;">{{ $userData['user']->name }}</td>
+                          <td style="text-align: center;">{{ $userData['details']->municipio }}</td>
+                          <td style="text-align: center;">{{ $userData['details']->tel_celular }}</td>
+                          <td style="text-align: center;">(1)</td>
+                          <td style="text-align: center;">
+                              {{ isset($coordinadores[$userData['details']->coordinador_id]) ? $coordinadores[$userData['details']->coordinador_id] : '-' }}
+                          </td>
+                          <td class="project-state" style="text-align: center;">
+                              @if ($userData['user']->status == 1)
+                                  <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                              @else
+                                  <span class="badge badge-danger"><i class="fas fa-times"></i></span>
+                              @endif
+                          </td>
+                          <td class="project-actions text-right">
+                              <form action="{{ route('grupo.destroy', $userData['user']->id) }}" method="POST">
+                                  @csrf
+                                  @method('DELETE')
+                                  <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-xl-{{ $userData['user']->id }}" title="Ver">
+                                      <i class="fas fa-folder"></i>
+                                      Ver
+                                  </a>
+                                  <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-up-{{ $userData['user']->id }}">
+                                      <i class="fas fa-pencil-alt"></i>
+                                      Editar
+                                  </a>
+                                  <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar">
+                                      <i class="fas fa-trash"></i>
+                                      Eliminar
+                                  </button>
+                              </form>
+                          </td>
+                      </tr>
                   @endforeach
-                  @endforeach
-                </tbody>
-                <tfoot>
+              </tbody>
+              <tfoot>
                   <tr>
-                    <th>No</th>
-                    <th>Nombre</th>
-                    <th>Municipio</th>
-                    <th>Tel. Celular</th>
-                    <th>Simpatizantes</th>
-                    <th>Alt. Usuario</th>
-                    <th>Estatus</th>
-                    <th>Acciones</th>
+                      <th>Clave</th>
+                      <th>Nombre</th>
+                      <th>Municipio</th>
+                      <th>Tel. Celular</th>
+                      <th>Simpatizantes</th>
+                      <th>Alt. Usuario</th>
+                      <th>Estatus</th>
+                      <th>Acciones</th>
                   </tr>
-                </tfoot>
-              </table>
+              </tfoot>
+            </table>
             </div>
             <!-- /.card-body -->
           </div>

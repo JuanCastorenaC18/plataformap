@@ -33,11 +33,12 @@ class SimpatizanteController extends Controller
      */
     public function index()
     {
-         // Obtén el objeto del rol 'cooestatal'
-         $cooestatalRole = Role::where('name', 'simpatizantes')->first();
-         $users = $cooestatalRole->users;
- 
-         $usersWithDetails = [];
+        // Obtén los usuarios asociados al rol 'simpatizantes'
+        $cooestatalRole = Role::where('name', 'simpatizantes')->first();
+        $users = $cooestatalRole->users;
+
+        // Obtén detalles adicionales para cada usuario
+        $usersWithDetails = [];
         foreach ($users as $user) {
             $details = UserDetail::where('user_id', $user->id)->first();
             $usersWithDetails[] = [
@@ -45,72 +46,79 @@ class SimpatizanteController extends Controller
                 'details' => $details
             ];
         }
+
+        // Obtén los coordinadores asociados a los usuarios con detalles
         $coordinadores = [];
         foreach ($usersWithDetails as $userData) {
             $coordinadorId = $userData['details']->coordinador_id;
-            $coordinador = User::find($coordinadorId); // Suponiendo que 'User' es el modelo de tu tabla de usuarios
-            $coordinadores[$coordinadorId] = $coordinador->name;
+            $coordinador = User::find($coordinadorId);
+            if ($coordinador) {
+                $coordinadores[$coordinadorId] = $coordinador->name;
+            }
         }
-         // Definir los nombres de los roles que deseas contar
-         $rolesToCount = [
-             'admin',
-             'cooestatal',
-             'coomunicipal',
-             'coogrupo',
-             'responsablered',
-             'simpatizantes',
-         ];
- 
-         // Declarar variables para almacenar los recuentos de usuarios por cada rol
-         $adminCount = 0;
-         $cooestatalCount = 0;
-         $coomunicipalCount = 0;
-         $coogrupoCount = 0;
-         $responsableredCount = 0;
-         $simpatizantesCount = 0;
- 
-         // Iterar sobre cada nombre de rol y contar los usuarios correspondientes
-         foreach ($rolesToCount as $roleName) {
-             // Obtener el objeto Role por su nombre
-             $role = Role::where('name', $roleName)->first();
- 
-             if ($role) {
-                 // Contar el número de usuarios que tienen este rol y asignarlo a la variable correspondiente
-                 switch ($roleName) {
-                     case 'admin':
-                         $adminCount = $role->users()->count();
-                         break;
-                     case 'cooestatal':
-                         $cooestatalCount = $role->users()->count();
-                         break;
-                     case 'coomunicipal':
-                         $coomunicipalCount = $role->users()->count();
-                         break;
-                     case 'coogrupo':
-                         $coogrupoCount = $role->users()->count();
-                         break;
-                     case 'responsablered':
-                         $responsableredCount = $role->users()->count();
-                         break;
-                     case 'simpatizantes':
-                         $simpatizantesCount = $role->users()->count();
-                         break;
-                     default:
-                         break;
-                 }
-             }
-         }
-         return view('simpatizante.index', [
-             'adminCount' => $adminCount,
-             'cooestatalCount' => $cooestatalCount,
-             'coomunicipalCount' => $coomunicipalCount,
-             'coogrupoCount' => $coogrupoCount,
-             'responsableredCount' => $responsableredCount,
-             'simpatizantesCount' => $simpatizantesCount,
-             'usersWithDetails' => $usersWithDetails,
-             'coordinadores' => $coordinadores,
-         ], compact('users'));
+
+        $rolesToCount = [
+            'admin',
+            'cooestatal',
+            'coomunicipal',
+            'coogrupo',
+            'responsablered',
+            'simpatizantes',
+        ];
+
+        // Declarar variables para almacenar los recuentos de usuarios por cada rol
+        $adminCount = 0;
+        $cooestatalCount = 0;
+        $coomunicipalCount = 0;
+        $coogrupoCount = 0;
+        $responsableredCount = 0;
+        $simpatizantesCount = 0;
+
+        // Iterar sobre cada nombre de rol y contar los usuarios correspondientes
+        foreach ($rolesToCount as $roleName) {
+            // Obtener el objeto Role por su nombre
+            $role = Role::where('name', $roleName)->first();
+
+            if ($role) {
+                // Contar el número de usuarios que tienen este rol y asignarlo a la variable correspondiente
+                switch ($roleName) {
+                    case 'admin':
+                        $adminCount = $role->users()->count();
+                        break;
+                    case 'cooestatal':
+                        $cooestatalCount = $role->users()->count();
+                        break;
+                    case 'coomunicipal':
+                        $coomunicipalCount = $role->users()->count();
+                        break;
+                    case 'coogrupo':
+                        $coogrupoCount = $role->users()->count();
+                        break;
+                    case 'responsablered':
+                        $responsableredCount = $role->users()->count();
+                        break;
+                    case 'simpatizantes':
+                        $simpatizantesCount = $role->users()->count();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        // Pasa los datos a la vista
+        return view('simpatizante.index', [
+            'adminCount' => $adminCount,
+            'cooestatalCount' => $cooestatalCount,
+            'coomunicipalCount' => $coomunicipalCount,
+            'coogrupoCount' => $coogrupoCount,
+            'responsableredCount' => $responsableredCount,
+            'simpatizantesCount' => $simpatizantesCount,
+            'usersWithDetails' => $usersWithDetails,
+            'coordinadores' => $coordinadores,
+        ], compact('users'));
     }
+
 
     /**
      * Show the form for creating a new resource.
