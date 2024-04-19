@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('int')->nullable();
             $table->string('codigo_postal')->nullable();
             $table->string('colonia')->nullable();
-            $table->string('clave')->nullable();
+            $table->string('clave')->unique()->nullable();
             $table->unsignedBigInteger('coordinador_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('coordinador_id')->references('id')->on('users')->onDelete('set null');

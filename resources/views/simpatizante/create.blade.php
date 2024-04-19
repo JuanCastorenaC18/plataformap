@@ -1,6 +1,7 @@
 
 
 @extends('adminlte::page')
+@include('sweetalert::alert')
 
 @section('title', 'REGISTRO')
 
@@ -16,7 +17,22 @@
             
             @include('components.boxmini')
             @include('components.boxminiReg')
-            
+            <br>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                </div>
+            @endif
+            @if(session('exito'))
+                <div class="alert alert-success">
+                {{ session('exito') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col">
                     <!-- general form elements -->

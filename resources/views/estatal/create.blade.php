@@ -16,16 +16,22 @@
         </div>
     </div>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
+    <br>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                <strong>¡Vaya!</strong> Hubo algunos problemas con su entrada.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+                    @endforeach
+                </ul>
+                </div>
+            @endif
+            @if(session('exito'))
+                <div class="alert alert-success">
+                {{ session('exito') }}
+                </div>
+            @endif
 
     <!-- Main content -->
     <div class="content">

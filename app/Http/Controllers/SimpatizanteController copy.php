@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Simpatizante;
+use App\Models\U;
 use Illuminate\Http\Request;
 
 class SimpatizanteController extends Controller
@@ -28,45 +29,63 @@ class SimpatizanteController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $request->validate([
-            'apellido_paterno' => 'required|string|max:255',
-            'apellido_materno' => 'nullable|string|max:255',
-            'nombres' => 'required|string|max:255',
-            'fecha_nacimiento' => 'required|date',
-            'sexo' => 'required|string|in:hombre,mujer', // Suponiendo que 'sexo' solo puede ser 'M' o 'F'
-            'fecha_alta' => 'nullable|date',
-            'ocupacion' => 'nullable|string|max:255',
-            'tel_celular' => 'nullable|string|max:20',
-            'tel_particular' => 'nullable|string|max:20',
-            'email' => 'nullable|string|email|max:255',
-            'facebook' => 'nullable|string|max:255',
-            'twitter' => 'nullable|string|max:255',
-            'informacion' => 'nullable|string',
-            'calle' => 'nullable|string|max:255',
-            'municipio' => 'nullable|string|max:255',
-            'seccion' => 'nullable|string|max:10',
-            'num' => 'nullable|string|max:10',
-            'int' => 'nullable|string|max:10',
-            'codigo_postal' => 'nullable|string|max:10',
-            'colonia' => 'nullable|string|max:255',
-            'clave' => 'nullable|string|max:255',
-            'usuario' => 'nullable|string|max:255',
-            'password' => 'nullable|string|max:255',
-            'status' => 'nullable|string|max:255',
-            'process' => 'nullable|string|max:255',
-        ]);
+        DB::beginTransaction();
 
-        // Crear un nuevo Simpatizante con los datos validados
-        $simpatizante = new Simpatizante($request->all());
+        try {
+            // Verificar si el usuario ya existe por su email
+            $existingUser = User::where('email', $request->input('email'))->first();
 
-        // Guardar el nuevo Simpatizante en la base de datos
-        $simpatizante->save();
+            if ($existingUser) {
+                return back()->withInput()->withErrors(['error' => 'El usuario ya está registrado con este correo electrónico.']);
+            }
 
-        // Redireccionar a una ruta después de guardar
-        return redirect()->route('simpatizantes.index')
-            ->with('success', 'Simpatizante creado exitosamente.');
+            // Crear un nuevo usuario en la tabla 'users'
+            $user = new User();
+            $user->nombre = $request->input('nombre');
+            $user->apellido_paterno = $request->input('apellido_paterno');
+            $user->apellido_materno = $request->input('apellido_materno');
+            $user->name = $request->input('apellido_paterno') . ' ' . $request->input('apellido_materno') . ' ' . $request->input('nombre');
+            $user->usuario = $request->input('usuario');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            $user->helperpass = $request->input('password');
+            $user->assignRole('SIMPATIZANTES');
+            $user->save();
+
+            // Crear detalles del usuario en la tabla 'user_detail'
+            $userDetail = new UserDetail();
+            $userDetail->user_id = $user->id;
+            $userDetail->fecha_nacimiento = $request->input('fecha_nacimiento');
+            $userDetail->sexo = $request->input('sexo');
+            $userDetail->fecha_alta = $request->input('fecha_alta');
+            $userDetail->ocupacion = $request->input('ocupacion');
+            $userDetail->tel_celular = $request->input('tel_celular');
+            $userDetail->tel_particular = $request->input('tel_particular');
+            $userDetail->email = $request->input('email');
+            $userDetail->facebook = $request->input('facebook');
+            $userDetail->twitter = $request->input('twitter');
+            $userDetail->informacion = $request->input('informacion');
+            $userDetail->calle = $request->input('calle');
+            $userDetail->municipio = $request->input('municipio');
+            $userDetail->seccion = $request->input('seccion');
+            $userDetail->num = $request->input('num');
+            $userDetail->int = $request->input('int');
+            $userDetail->codigo_postal = $request->input('codigo_postal');
+            $userDetail->colonia = $request->input('colonia');
+            $userDetail->clave = $request->input('clave');
+            $userDetail->coordinador_id = Auth::id();
+            $userDetail->save();
+
+            DB::commit();
+
+            return redirect()->route('simpatizante.index')->with('Exito', 'Usuario registrado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            return back()->withInput()->withErrors(['error' => 'Hubo un error al registrar el usuario. Por favor, intenta de nuevo.']);
+        }
     }
+
 
     /**
      * Display the specified resource.
