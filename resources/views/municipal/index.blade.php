@@ -284,7 +284,7 @@
           <div class="modal-body">
             <form action="{{ route('municipal.update', $user->id) }}" method="POST" enctype="multipart/form-data">
               @csrf
-              @method('PATCH') 
+              @method('PUT') 
 
                 <div class="card-body">
                   <div class="form-group">

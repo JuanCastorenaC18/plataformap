@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 
-
 class SimpatizanteController extends Controller
 {
     public function __construct()
@@ -284,10 +283,67 @@ class SimpatizanteController extends Controller
         //
     }
 
+    public function update(Request $request, $id)
+    {
+        // Imprime los datos recibidos para verificar el flujo de datos
+        dd(DB::beginTransaction());
+
+        try {
+            // Encuentra el usuario existente
+            $user = User::findOrFail($id);
+
+            // Actualiza los campos del usuario
+            $user->update([
+                'name' => $request->input('nombre') . ' ' . $request->input('apellido_paterno') . ' ' . $request->input('apellido_materno'),
+                'usuario' => $request->input('usuario'),
+                'email' => $request->input('email'),
+                'password' => $request->filled('password') ? Hash::make($request->input('password')) : $user->password,
+                'helperpass' => $request->filled('password') ? $request->input('password') : $user->helperpass,
+            ]);
+
+            // Encuentra los detalles del usuario existente
+            $userDetail = UserDetail::where('user_id', $id)->firstOrFail();
+
+            // Actualiza los campos de los detalles del usuario
+            $userDetail->update([
+                'fecha_nacimiento' => $request->input('fecha_nacimiento'),
+                'sexo' => $request->input('sexo'),
+                'fecha_alta' => $request->input('fecha_alta'),
+                'ocupacion' => $request->input('ocupacion'),
+                'tel_celular' => $request->input('tel_celular'),
+                'tel_particular' => $request->input('tel_particular'),
+                'email' => $request->input('email'),
+                'facebook' => $request->input('facebook'),
+                'twitter' => $request->input('twitter'),
+                'informacion' => $request->input('informacion'),
+                'calle' => $request->input('calle'),
+                'municipio' => $request->input('municipio'),
+                'seccion' => $request->input('seccion'),
+                'num' => $request->input('num'),
+                'int' => $request->input('int'),
+                'codigo_postal' => $request->input('codigo_postal'),
+                'colonia' => $request->input('colonia'),
+                'clave' => $request->input('clave'),
+            ]);
+
+            DB::commit();
+            
+
+            return redirect()->route('simpatizante.index')->with('Exito', 'Usuario actualizado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withInput()->withErrors(['error' => 'Hubo un error al actualizar el usuario. Por favor, intenta de nuevo.']);
+        }
+    }
+
+
+
+
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): RedirectResponse
+    /*public function update(Request $request, User $user): RedirectResponse
     {
         DB::beginTransaction();
 
@@ -337,7 +393,7 @@ class SimpatizanteController extends Controller
             dd($e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Hubo un error al actualizar el usuario. Por favor, intenta de nuevo.']);
         }
-    }
+    }*/
     /**
      * Remove the specified resource from storage.
      */

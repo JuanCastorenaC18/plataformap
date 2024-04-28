@@ -25,6 +25,7 @@ class User extends Authenticatable
         'usuario',
         'email',
         'password',
+        'helperpass',
     ];
 
     /**
@@ -80,7 +81,7 @@ class User extends Authenticatable
 
     public function adminlte_profile_url()
     {
-        return redirect()->route('profile.edit');
+        return 'profile';
     }
 
     public function userDetails(): HasOne

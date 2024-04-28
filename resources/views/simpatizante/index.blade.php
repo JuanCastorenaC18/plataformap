@@ -280,7 +280,7 @@
           <div class="modal-body">
             <form action="{{ route('simpatizante.update', $user->id) }}" method="POST" enctype="multipart/form-data">
               @csrf
-              @method('PATCH') 
+              @method('PATCH')
 
                 <div class="card-body">
                   <div class="form-group">
@@ -477,7 +477,6 @@
       <!-- /.modal-dialog -->
     </div>
   @endforeach
-
 @stop
 
 @section('css')
