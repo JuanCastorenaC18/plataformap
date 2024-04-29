@@ -27,7 +27,8 @@
 @stop
 
 @section('css')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="resources/css/app.css">
+    
     {{-- Add here extra stylesheets --}}
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
     <style>
@@ -36,5 +37,5 @@
 @stop
 
 @section('js')
-    
+    <link rel="stylesheet" href="resources/js/app.js">
 @stop
