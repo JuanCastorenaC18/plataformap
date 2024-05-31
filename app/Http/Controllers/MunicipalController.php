@@ -193,12 +193,6 @@ class MunicipalController extends Controller
         DB::beginTransaction();
 
         try {
-            // Verificar si el usuario ya existe por su email
-            $existingUser = UserDetail::where('clave', $request->input('clave'))->first();
-    
-            if ($existingUser) {
-                return back()->withInput()->withErrors(['error' => 'YA EXISTE UN USUARIO CON ESA CLAVE ELECTORAL.']);
-            }
             
             $user = new User();
             $user->nombre = $request->input('nombre');
