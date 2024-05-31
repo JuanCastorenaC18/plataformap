@@ -73,7 +73,7 @@
                                         <p>Fecha Nacimiento:</p>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-2 col-xl-2">
-                                        <input type="date" name="fecha_nacimiento" class="form-control form-control-border" placeholder="Fecha Nacimiento" required>
+                                        <input type="date" name="fecha_nacimiento" class="form-control form-control-border" placeholder="Fecha Nacimiento">
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
                                         <select name="sexo" id="Sexo" class="custom-select form-control-border" id="exampleSelectBorder">
@@ -98,26 +98,26 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="text" name="ocupacion" class="form-control form-control-border" placeholder="Ocupacion" required>
+                                        <input type="text" name="ocupacion" class="form-control form-control-border" placeholder="Ocupacion">
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
                                         <input type="tel" name="tel_celular" class="form-control form-control-border" maxlength="10" minlength="10" placeholder="Tel. Celular" required>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="tel" name="tel_particular" class="form-control form-control-border" maxlength="10" minlength="10" placeholder="Tel. Particular" required>
+                                        <input type="tel" name="tel_particular" class="form-control form-control-border" maxlength="10" minlength="10" placeholder="Tel. Particular">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="email" name="email" class="form-control form-control-border" placeholder="Correo" required>
+                                        <input type="email" name="email" class="form-control form-control-border" placeholder="Correo">
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="text" name="facebook" class="form-control form-control-border" placeholder="Facebook" required>
+                                        <input type="text" name="facebook" class="form-control form-control-border" placeholder="Facebook">
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="text" name="twitter" class="form-control form-control-border" placeholder="Twitter" required>
+                                        <input type="text" name="twitter" class="form-control form-control-border" placeholder="Twitter">
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                         <input type="text" name="informacion" class="form-control form-control-border" placeholder="Informacion Extra">
@@ -181,14 +181,14 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="text" name="seccion" class="form-control form-control-border" placeholder="Seccion" required>
+                                        <input type="text" name="seccion" class="form-control form-control-border" placeholder="Seccion">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
-                                        <input type="text" name="num" class="form-control form-control-border" placeholder="Num" required>
+                                        <input type="text" name="num" class="form-control form-control-border" placeholder="Num">
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-4 col-xl-4">
                                         <input type="text" name=" int" class="form-control form-control-border" placeholder="int.">
@@ -204,7 +204,7 @@
                                         <input type="text" name="colonia" class="form-control form-control-border" placeholder="Colonia" required>
                                     </div>
                                     <div class="col-sm-6 col-md-5 col-lg-6 col-xl-6">
-                                        <input type="text" name="clave" class="form-control form-control-border" maxlength="18" minlength="18" placeholder="Clav E" required>
+                                        <input type="text" name="clave" class="form-control form-control-border" maxlength="18" minlength="18" placeholder="Clav E">
                                     </div>
                                 </div>
                             </div>
