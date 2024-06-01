@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Simpatizante;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Voto;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\View;
 
@@ -33,9 +34,11 @@ class SimpatizanteController extends Controller
      */
     public function index()
     {
+        $votos = Voto::all();
+        // Obtén el objeto del rol 'cooestatal'
+
         // Obtén los usuarios asociados al rol 'simpatizantes'
-        $cooestatalRole = Role::where('name', 'simpatizantes')->first();
-        $users = $cooestatalRole->users;
+        $users = Role::where('name', 'simpatizantes')->first()->users()->with('votos')->get();
 
         // Obtén detalles adicionales para cada usuario
         $usersWithDetails = [];
@@ -116,7 +119,7 @@ class SimpatizanteController extends Controller
             'simpatizantesCount' => $simpatizantesCount,
             'usersWithDetails' => $usersWithDetails,
             'coordinadores' => $coordinadores,
-        ], compact('users'));
+        ], compact('users', 'votos'));
     }
 
 

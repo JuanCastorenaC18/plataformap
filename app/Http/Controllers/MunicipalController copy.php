@@ -36,8 +36,10 @@ class MunicipalController extends Controller
     {
         
         $votos = Voto::all();
-        // Obtén el objeto del rol 'cooestatal'
-        $users = Role::where('name', 'coomunicipal')->first()->users()->with('votos')->get();
+         // Obtén el objeto del rol 'cooestatal'
+         $cooestatalRole = Role::where('name', 'coomunicipal')->first();
+         $users = $cooestatalRole->users;
+          $users = Role::where('name', 'coomunicipal')->first()->users()->with('votos')->get();
 
          // Obtén los detalles de cada usuario
         $usersWithDetails = [];

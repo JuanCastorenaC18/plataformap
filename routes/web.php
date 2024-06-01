@@ -6,6 +6,7 @@ use App\Http\Controllers\RedController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\SimpatizanteController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VotoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -164,5 +165,6 @@ Route::resource('estatal', EstatalController::class)->names(['estatal']);
 Route::resource('municipal', MunicipalController::class)->names(['municipal']);
 Route::resource('responsable-red', RedController::class)->names(['responsable-red']);
 Route::resource('grupo', GrupoController::class)->names(['grupo']);
+Route::resource('voto', VotoController::class)->names(['voto']);
 
 

@@ -1,8 +1,13 @@
+
+
 @extends('adminlte::page')
+
 @section('title', 'ESTATAL')
+
 @section('content_header')
     <h1>ESTATAL</h1>
 @stop
+
 @section('content')
   <!-- Main content -->
   <section class="content">
@@ -11,102 +16,104 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header" style="background-color: #603;">
-              <h3 class="card-title" style="color: #fff;">NIVEL ESTRUCTURA : <strong>SIMPATIZANTE</strong></h3>
+            <div class="card-header" style="background-color: #f90;">
+              <h3 class="card-title" style="color: #fff;">NIVEL ESTRUCTURA : <strong>COORDINADOR MUNICIPAL</strong></h3>
               <form action="" method="GET" class="form-inline float-right">
-                <div class="form-group mr-2">
-                  <label for="role" class="mr-2">Filtrar por rol:</label>
-                  <select name="role" id="role" class="form-control" onchange="this.form.submit()">
-                    <option value="Todos">Todos</option> <!-- Opción para mostrar todos los usuarios -->
-                  </select>
-                </div>
+                  <div class="form-group mr-2">
+                      <label for="role" class="mr-2">Filtrar por rol:</label>
+                      <select name="role" id="role" class="form-control" onchange="this.form.submit()">
+                          <option value="Todos">Todos</option> <!-- Opción para mostrar todos los usuarios -->
+                          
+                      </select>
+                  </div>
               </form>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-            <table id="usuarios" class="table table-bordered table-striped" data-toggle="table" data-target="#usuarios">
+              <table id="usuarios" class="table table-bordered table-striped" data-toggle="table" data-target="#usuarios">
                 <thead>
                   <tr>
-                      <th>Clave</th>
-                      <th>Nombre</th>
-                      <th>Municipio</th>
-                      <th>Tel. Celular</th>
-                      <th>Simpatizantes</th>
-                      <th>Alt. Usuario</th>
-                      <th>Voto</th>
-                      <th>Accionar Voto</th>
-                      <th>Estatus</th>
-                      <th>Acciones</th>
+                    <th>Clave</th>
+                    <th>Nombre</th>
+                    <th>Municipio</th>
+                    <th>Tel. Celular</th>
+                    <th>Simpatizantes</th>
+                    <th>Alt. Usuario</th>
+                    <th>Voto</th>
+                    <th>Accionar Voto</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($users as $user)
                   @foreach ($usersWithDetails as $userData)
-                      <tr>
-                          <td style="text-align: center;">{{ $userData['user']->id }}</td>
-                          <td style="text-align: center;">{{ $userData['user']->name }}</td>
-                          <td style="text-align: center;">{{ $userData['details']->municipio }}</td>
-                          <td style="text-align: center;">{{ $userData['details']->tel_celular }}</td>
-                          <td style="text-align: center;">(1)</td>
-                          <td style="text-align: center;">
-                              {{ isset($coordinadores[$userData['details']->coordinador_id]) ? $coordinadores[$userData['details']->coordinador_id] : '-' }}
-                          </td>
-
-                          <td style="text-align: center;">
-                            @foreach ($votos as $voto)
-                                @if ($voto->user_id == $userData['user']->id)
-                                    @if ($voto->voto)
-                                        <span class="badge badge-success"><i class="fas fa-check"></i></span>
-                                    @else
-                                        <span class="badge badge-danger"><i class="fas fa-times"></i></span>
-                                    @endif
-                                    @break
-                                @endif
-                            @endforeach
-                          </td>
-                          <td style="text-align: center;">
-                            <a class="btn btn-warning" data-toggle="modal" data-target="#modal-up2-{{ $userData['user']->id }}" title="Editar"><i class="fas fa-edit"></i></a>
-                          </td>
-
-                          <td class="project-state" style="text-align: center;">
-                              @if ($userData['user']->status == 1)
-                                  <span class="badge badge-success"><i class="fas fa-check"></i></span>
-                              @else
-                                  <span class="badge badge-danger"><i class="fas fa-times"></i></span>
-                              @endif
-                          </td>
-                          <td class="project-actions text-right">
-                              <form action="{{ route('grupo.destroy', $userData['user']->id) }}" method="POST">
-                                  @csrf
-                                  @method('DELETE')
-                                  <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-xl-{{ $userData['user']->id }}" title="Ver">
-                                      <i class="fas fa-folder"></i>
-                                      Ver
-                                  </a>
-                                  <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-up-{{ $userData['user']->id }}">
-                                      <i class="fas fa-pencil-alt"></i>
-                                      Editar
-                                  </a>
-                                  <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar">
-                                      <i class="fas fa-trash"></i>
-                                      Eliminar
-                                  </button>
-                              </form>
-                          </td>
-                      </tr>
+                  <tr>
+                    <td style="text-align: center;">{{ $user->id }}</td>
+                    <td style="text-align: center;">{{ $user->name }}</td>
+                    <td style="text-align: center;">{{ $userData['details']->municipio }}</td>
+                    <td style="text-align: center;">{{ $userData['details']->tel_celular }}</td>
+                    <td style="text-align: center;">(1)</td>
+                    <td style="text-align: center;">
+                      {{ isset($coordinadores[$userData['details']->coordinador_id]) ? $coordinadores[$userData['details']->coordinador_id] : '-' }}
+                    </td>
+                    <td style="text-align: center;">
+                      @foreach ($votos as $voto)
+                        @if ($voto->user_id == $userData['user']->id)
+                            @if ($voto->voto)
+                                <span class="badge badge-success"><i class="fas fa-check"></i></span>
+                            @else
+                                <span class="badge badge-danger"><i class="fas fa-times"></i></span>
+                            @endif
+                            @break
+                        @endif
+                      @endforeach
+                    </td>
+                    <td style="text-align: center;">
+                      <a class="btn btn-warning" data-toggle="modal" data-target="#modal-up2-{{ $user->id }}" title="Editar"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td class="project-state" style="text-align: center;">
+                      @if($user->status == 1)
+                        <span class="badge badge-success"><i class="fas fa-check"></i></span> <!-- Icono de palomita -->
+                      @else
+                        <span class="badge badge-danger"><i class="fas fa-times"></i></span> <!-- Icono de tachita -->
+                      @endif
+                    </td>
+                    <td class="project-actions text-right">
+                      <form action="{{ route('municipal.destroy',$user->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <a class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modal-xl-{{ $user->id }}" title="Ver">
+                          <i class="fas fa-folder">
+                          </i>
+                          Ver
+                        </a>
+                        <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-up-{{ $user->id }}">
+                          <i class="fas fa-pencil-alt">
+                          </i>
+                          Editar
+                        </a>
+                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash">
+                          </i>
+                          Eliminar</button>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
                   @endforeach
                 </tbody>
                 <tfoot>
                   <tr>
-                      <th>Clave</th>
-                      <th>Nombre</th>
-                      <th>Municipio</th>
-                      <th>Tel. Celular</th>
-                      <th>Simpatizantes</th>
-                      <th>Alt. Usuario</th>
-                      <th>Voto</th>
-                      <th>Accionar Voto</th>
-                      <th>Estatus</th>
-                      <th>Acciones</th>
+                    <th>No</th>
+                    <th>Nombre</th>
+                    <th>Municipio</th>
+                    <th>Tel. Celular</th>
+                    <th>Simpatizantes</th>
+                    <th>Alt. Usuario</th>
+                    <th>Voto</th>
+                    <th>Accionar Voto</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
                   </tr>
                 </tfoot>
               </table>
@@ -122,13 +129,13 @@
     <!-- /.container-fluid -->
   </section>
 
-   <!-- VER -->
+<!-- VER -->
 @foreach ($users as $user)
       <div class="modal fade" id="modal-xl-{{ $user->id }}">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">
-              <!--<img src="{{ asset('img/PRI-logo-blanco.png') }}" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">-->
+              <img src="img/logoiesizformal.png" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">
               <h4 class="modal-title">Datos Del Usuario</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="close">
                   <span aria-hidden="true">&times;</span>
@@ -283,12 +290,12 @@
   @endforeach
 
   <!-- EDITAR -->
-  @foreach ($users as $user)
+@foreach ($users as $user)
     <div class="modal fade" id="modal-up2-{{ $user->id }}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!--<img src="{{ asset('img/PRI-logo-blanco.png') }}" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">-->
+                    <img src="img/logoiesizformal.png" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">
                     <h4 class="modal-title">Ya voto?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="close">
                         <span aria-hidden="true">&times;</span>
@@ -326,7 +333,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-  @endforeach
+@endforeach
+
+
 
   <!--EDITAR-->
   @foreach ($users as $user)
@@ -334,16 +343,16 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <!--<img src="{{ asset('img/')}}" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">-->
+            <img src="img/PRI-logo-blanco.png" alt="User Image" class="img-fluid" style="max-width: 40px; max-height: 40px; margin-right: 10px;">
             <h4 class="modal-title">Editar Datos Del Usuario</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form action="{{ route('simpatizante.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('municipal.update', $user->id) }}" method="POST" enctype="multipart/form-data">
               @csrf
-              @method('PATCH')
+              @method('PUT') 
 
                 <div class="card-body">
                   <div class="form-group">
@@ -540,6 +549,7 @@
       <!-- /.modal-dialog -->
     </div>
   @endforeach
+
 @stop
 
 @section('css')
